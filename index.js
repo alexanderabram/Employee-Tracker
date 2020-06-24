@@ -49,7 +49,41 @@ function employeeTrack () {
                 viewEmByMa();
                 break;
             
-            case 
+            case "Add Employee":
+                addEm ();
+                break;
+
+            case "Remove Employee":
+                remEm ();
+                break;
+
+            case "Add Department":
+                addDep();
+                break;
+            
+            case "Remove Department":
+                remDep();
+                break;
+
+            case "Add Role":
+                addRole();
+                break;
+
+            case "Remove Role":
+                remRole();
+                break;
+
+            case "Update Employee Role":
+                updateEmRole();
+                break;
+
+            case "Update Employee Manager":
+                updateEmMa();
+                break;
+
+            case "Exit":
+                connection.end();
+                break;
         }
     })
 }
