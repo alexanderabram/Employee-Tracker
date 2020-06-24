@@ -22,10 +22,14 @@ function employeeTrack () {
         message: "What would you like to do?",
         choices: [
             "View ALL Employees",
-            "View ALL Employees by Eepartment",
+            "View ALL Employees by Department",
             "View ALL Employees by Manager",
             "Add Employee",
             "Remove Employee",
+            "Add Department",
+            "Remove Department",
+            "Add Role",
+            "Remove Role",
             "Update Employee Role",
             "Update Employee Manager"
         ]
