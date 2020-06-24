@@ -31,7 +31,25 @@ function employeeTrack () {
             "Add Role",
             "Remove Role",
             "Update Employee Role",
-            "Update Employee Manager"
+            "Update Employee Manager",
+            "Exit"
         ]
+    })
+    .then(function (res) {
+        switch (res.employeeTrack){
+            case "View ALL Employees":
+            viewEm();
+            break;
+
+            case "View ALL Employees by Department":
+            viewEmByD();
+            break;
+
+            case "View ALL Employees by Manager":
+                viewEmByMa();
+                break;
+            
+            case 
+        }
     })
 }
