@@ -29,6 +29,7 @@ function start() {
                     "Remove Department",
                     "View all Departments",
                     "Add Roles",
+                    "Remove Roles",
                     "View all Roles",
                     "Update Employee Role",
                     "Exit"
@@ -66,6 +67,10 @@ function start() {
                     addRole();
                     break;
 
+                case "Remove Roles":
+                    removeRole();
+                    break;
+
                 case "View all Roles":
                     viewRole();
                     break;
@@ -83,6 +88,14 @@ function start() {
 
 function addEmp() {
     console.log("Inserting a new employee!");
+    let roleChoice = [];
+    connection.query(
+        "SELECT role.id, role.title FROM role", (err,res) => {
+            for (let i = 0; i < res.length; i++){
+                roleChoice.push({name: res[i].title, value: res[i].id});
+            }
+        }
+    )
     inquirer
         .prompt([
             {
@@ -99,7 +112,7 @@ function addEmp() {
                 type: "list",
                 message: "What is the employee's role?",
                 name: "role_id",
-                choices: [1, 2, 3]
+                choices: roleChoice
             },
             {
                 type: "input",
@@ -275,6 +288,37 @@ function addRole() {
         })
 }
 
+function removeRole() {
+    let roleList = [];
+    connection.query(
+        "SELECT role.title FROM role", (err, res) => {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                roleList.push(res[i].title);
+            }
+            inquirer
+                .prompt([
+                    {
+                        type: "list",
+                        message: "Which role would you like to remove?",
+                        name: "role",
+                        choices: roleList
+
+                    },
+                ])
+                .then(function (res) {
+                    const query = connection.query(
+                        `DELETE FROM role WHERE (title) = '${res.role}'`,
+                        function (err, res) {
+                            if (err) throw err;
+                            console.log("Employee deleted!");
+                            start();
+                        });
+                });
+        }
+    );
+};
+
 function viewRole() {
     connection.query("SELECT role.*, department.name FROM role LEFT JOIN department ON department.id = role.department_id", function (err, res) {
         if (err) throw err;
@@ -285,10 +329,10 @@ function viewRole() {
 }
 
 function updateEmpRole() {
-
     connection.query("SELECT first_name, last_name, id FROM employee",
         function (err, res) {
             let employees = res.map(employee => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }))
+            let roles = res.map(role => ({ name: role.id, value: role.title }))
 
             inquirer
                 .prompt([
@@ -299,9 +343,10 @@ function updateEmpRole() {
                         choices: employees
                     },
                     {
-                        type: "input",
+                        type: "list",
                         name: "role",
-                        message: "What is your new role?"
+                        message: "What is your new role?",
+                        choices: roles
                     }
                 ])
                 .then(function (res) {
