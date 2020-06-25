@@ -2,6 +2,8 @@
 
 ## Demo
 
+![Employee Tracker GIF](https://user-images.githubusercontent.com/63982568/85648244-f2d1a880-b665-11ea-8608-bec5b94acdb0.gif)
+
 ## Installation
 
 1. Clone the repository onto your local machine.
