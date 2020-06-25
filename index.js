@@ -116,7 +116,8 @@ function addEm() {
             {
                 name: "first_name",
                 type: "input",
-                message: "Provide employee's first name",            },
+                message: "Provide employee's first name",
+            },
             {
                 name: "last_name",
                 type: "input",
@@ -149,13 +150,61 @@ function addEm() {
 }
 
 
-function remEm()
-let employeeArr = [];
-connection.query(
-    "SELECT employee.first_name, employee.last_name"
-)
+function remEm() {
+    let employeeArr = [];
+    connection.query(
+        "SELECT employee.first_name, employee.last_name FROM employee", (err, res) => {
+            for (let i = 0; i < res.length; i++) {
+                employeeList.push(res[i].first_name + " " + res[i].last_name);
+            }
+            inquirer
+                .prompt([
+                    {
+                        name: "employee",
+                        type: "list",
+                        message: "Which employee would you like to remove?",
+                        choices: employeeList
+
+                    },
+                ])
+                .then(function (res) {
+                    const query = connection.query(
+                        `DELETE FROM employees WHERE concat(first_name, ' ' ,last_name) = '${res.employee}'`,
+                        function (err, res) {
+                            if (err) throw err;
+                            console.log("Employee deleted!\n");
+                            start();
+                        });
+                });
+        }
+    );
+};
 
 function addDep()
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "deptName",
+                message: "What Department would you like to add?"
+            }
+        ])
+        .then(function (res) {
+            console.log(res);
+            const query = connection.query(
+                "INSERT INTO departments SET ?",
+                {
+                    name: res.deptName
+                },
+                function (err, res) {
+                    connection.query("SELECT * FROM departments", function (err, res) {
+                        console.table(res);
+                        start();
+                    })
+                }
+            )
+        })
+}
 
 function remDep()
 
