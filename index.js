@@ -180,31 +180,32 @@ function remEm() {
     );
 };
 
-function addDep()
+function addDep(){
     inquirer
         .prompt([
             {
+                name: "department_name",
                 type: "input",
-                name: "deptName",
                 message: "What Department would you like to add?"
             }
         ])
         .then(function (res) {
             console.log(res);
             const query = connection.query(
-                "INSERT INTO departments SET ?",
+                "INSERT INTO department SET ?",
                 {
-                    name: res.deptName
+                    name: res.department_name
                 },
                 function (err, res) {
-                    connection.query("SELECT * FROM departments", function (err, res) {
+                    connection.query("SELECT * FROM department", function (err, res) {
+                        if (err) throw err;
                         console.table(res);
                         start();
                     })
                 }
             )
         })
-}
+    }
 
 function remDep()
 
