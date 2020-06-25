@@ -46,9 +46,9 @@ function start() {
                     viewEmp();
                     break;
 
-                // case "Remove Employee":
-                //     removeEmp();
-                //     break;
+                case "Remove Employee":
+                    removeEmp();
+                    break;
 
                 case "Add Department":
                     addDep();
@@ -83,12 +83,12 @@ function addEmp() {
         .prompt([
             {
                 type: "input",
-                message: "Provide the employee's first name?",
+                message: "Provide the employee's first name",
                 name: "first_name",
             },
             {
                 type: "input",
-                message: "Provide the employee's last name?",
+                message: "Provide the employee's last name",
                 name: "last_name"
             },
             {
