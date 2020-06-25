@@ -22,7 +22,8 @@ function run() {
             message: "What would you like to do?",
             choices: [
                 "View ALL Employees",
-                "View ALL Employees by Department",
+                "View ALL Departments",
+                "View ALL Roles",
                 "View ALL Employees by Manager",
                 "Add Employee",
                 "Remove Employee",
@@ -43,6 +44,10 @@ function run() {
 
                 case "View ALL Departments":
                     viewDep();
+                    break;
+
+                case "View ALL Roles":
+                    viewRole();
                     break;
 
                 case "View ALL Employees By Manager":
@@ -180,7 +185,7 @@ function remEm() {
     );
 };
 
-function addDep(){
+function addDep() {
     inquirer
         .prompt([
             {
@@ -205,14 +210,60 @@ function addDep(){
                 }
             )
         })
-    }
+}
 
 function remDep()
 
-function addRole()
+function addRole() {
+    function addRole() {
+        let departments = [];
+        connection.query("SELECT * FROM departments",
+            function (err, res) {
+                if (err) throw err;
+                for (let i = 0; i < res.length; i++) {
+                    res[i].first_name + " " + res[i].last_name
+                    departments.push({ name: res[i].name, value: res[i].id });
+                }
+                inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "title",
+                            message: "What role would you like to add?"
+                        },
+                        {
+                            type: "input",
+                            name: "salary",
+                            message: "What is the salary for the role?"
+                        },
+                        {
+                            type: "list",
+                            name: "department",
+                            message: "what department?",
+                            choices: departments
+                        }
+                    ])
+                    .then(function (res) {
+                        console.log(res);
+                        const query = connection.query(
+                            "INSERT INTO roles SET ?",
+                            {
+                                title: res.title,
+                                salary: res.salary,
+                                department_id: res.department
+                            },
+                            function (err, res) {
+                                if (err) throw err;
+                                //const id = res.insertId;
+                                start();
+                            }
+                        )
+                    })
+            })
+    }
 
-function remRole()
+    function remRole()
 
-function updateEmRole()
+    function updateEmRole()
 
-function updateEmMa()
+    function updateEmMa()
