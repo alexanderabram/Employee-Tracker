@@ -90,9 +90,9 @@ function addEmp() {
     console.log("Inserting a new employee!");
     let roleChoice = [];
     connection.query(
-        "SELECT role.id, role.title FROM role", (err,res) => {
-            for (let i = 0; i < res.length; i++){
-                roleChoice.push({name: res[i].title, value: res[i].id});
+        "SELECT role.id, role.title FROM role", (err, res) => {
+            for (let i = 0; i < res.length; i++) {
+                roleChoice.push({ name: res[i].title, value: res[i].id });
             }
         }
     )
@@ -332,13 +332,8 @@ function updateEmpRole() {
     connection.query("SELECT first_name, last_name, id FROM employee",
         function (err, res) {
             let employees = res.map(employee => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }));
-    
-    connection.query("SELECT id, title FROM role", 
-        function (err,res) {
-            let roles = res.map(role => ({ name: role.title, value: role.id}));
-        })
 
-    connection.query
+            connection.query
             inquirer
                 .prompt([
                     {
@@ -348,10 +343,9 @@ function updateEmpRole() {
                         choices: employees
                     },
                     {
-                        type: "list",
+                        type: "input",
                         name: "role",
                         message: "What is employee's new role?",
-                        choices: roles
                     }
                 ])
                 .then(function (res) {
