@@ -110,25 +110,50 @@ function viewDep() {
 // }
 
 function addEm() {
-    console.log("Inserting an employee!")
+    console.log("Inserting a new employee!");
+    inquirer
+        .prompt([
+            {
+                name: "first_name",
+                type: "input",
+                message: "Provide employee's first name",            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "Provide employee's last name"
+            },
+            {
+                name: "role",
+                type: "list",
+                message: "What is the employee's role?",
+                choices: [1, 2, 3]
+            },
+            {
+                name: "manager",
+                type: "input",
+                name: "Who is the employee's manager?"
+            }
+        ])
+        .then(function (res) {
+            const query = connection.query(
+                "INSERT INTO employees SET ?",
+                res,
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Employee added!");
 
-    var query =
-        `SELECT r.id, r.title, r.salary 
-        FROM role r`
-
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-
-        var roleChoices = res.map(({ id, title, salary }) => ({
-            value: id, title: `${title}`, salary: `${salary}`
-        }));
-
-        console.table(res);
-
-        promptAdd(roleChoices);
-    });
+                    run();
+                }
+            );
+        })
 }
+
+
 function remEm()
+let employeeArr = [];
+connection.query(
+    "SELECT employee.first_name, employee.last_name"
+)
 
 function addDep()
 
