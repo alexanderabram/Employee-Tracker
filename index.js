@@ -28,7 +28,7 @@ function start() {
                     "Add Department",
                     "Remove Department",
                     "View all Departments",
-                    "Add Roles",
+                    "Add Roles (Be sure the relevant department already exists",
                     "Remove Roles",
                     "View all Roles",
                     "Update Employee Role",
@@ -63,7 +63,7 @@ function start() {
                     viewDep();
                     break;
 
-                case "Add Roles":
+                case "Add Roles (Be sure the relevant department already exists":
                     addRole();
                     break;
 
@@ -255,7 +255,7 @@ function addRole() {
                     {
                         type: "input",
                         name: "title",
-                        message: "What role would you like to add? (Be sure the proper department exists)"
+                        message: "What role would you like to add?"
                     },
                     {
                         type: "input",
