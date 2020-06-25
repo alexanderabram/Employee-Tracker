@@ -98,8 +98,8 @@ function viewEm() {
 }
 
 
-function viewDep(){
-    connection.query ("SELECT * FROM department", function(err,res) {
+function viewDep() {
+    connection.query("SELECT * FROM department", function (err, res) {
         console.table(res);
         run();
     })
@@ -110,20 +110,24 @@ function viewDep(){
 // }
 
 function addEm() {
-    console.log("Generating new employee.\n");
-    var query = "SELECT role.id, role.title, role.salary FROM role"
+    console.log("Inserting an employee!")
 
-    connection.query(query, function (err,res) {
+    var query =
+        `SELECT r.id, r.title, r.salary 
+        FROM role r`
+
+    connection.query(query, function (err, res) {
         if (err) throw err;
 
-        var roleChoices = res.map(({ id, title, salary})) => ({
+        var roleChoices = res.map(({ id, title, salary }) => ({
             value: id, title: `${title}`, salary: `${salary}`
-        });
+        }));
+
+        console.table(res);
+
+        promptAdd(roleChoices);
     });
-
-    console.table(res);
-
-
+}
 function remEm()
 
 function addDep()
