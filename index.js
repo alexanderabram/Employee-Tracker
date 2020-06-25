@@ -111,15 +111,17 @@ function viewDep(){
 
 function addEm() {
     console.log("Generating new employee.\n");
-    inquirer
-    .prompt ([
-        {
-            name: "first_name",
-            type: "input",
-            message: "Provide employee's first name"
-        },
-    ])
-}
+    var query = "SELECT role.id, role.title, role.salary FROM role"
+
+    connection.query(query, function (err,res) {
+        if (err) throw err;
+
+        var roleChoices = res.map(({ id, title, salary})) => ({
+            value: id, title: `${title}`, salary: `${salary}`
+        });
+    });
+
+    console.table(res);
 
 
 function remEm()
