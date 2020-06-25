@@ -55,7 +55,7 @@ function start() {
                     break;
 
                 case "Remove Department":
-                    remDep();
+                    removeDep();
                     break;
 
                 case "View all Departments":
@@ -188,6 +188,37 @@ function addDep() {
             )
         })
 }
+
+function removeDep() {
+    let departmentList = [];
+    connection.query(
+        "SELECT department.name FROM department", (err, res) => {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                departmentList.push(res[i].name);
+            }
+            inquirer
+                .prompt([
+                    {
+                        type: "list",
+                        message: "Which department would you like to remove?",
+                        name: "department",
+                        choices: departmentList
+
+                    },
+                ])
+                .then(function (res) {
+                    const query = connection.query(
+                        `DELETE FROM department WHERE (name) = '${res.department}'`,
+                        function (err, res) {
+                            if (err) throw err;
+                            console.log("Department removed!");
+                            start();
+                        });
+                });
+        }
+    );
+};
 
 function viewDep() {
     connection.query("SELECT * FROM department", function (err, res) {
