@@ -26,7 +26,7 @@ function start() {
                     "Remove Employee",
                     "View all Employees",
                     "Add Department",
-                    // "Remove Department",
+                    "Remove Department",
                     "View all Departments",
                     "Add Roles",
                     "View all Roles",
@@ -52,6 +52,10 @@ function start() {
 
                 case "Add Department":
                     addDep();
+                    break;
+
+                case "Remove Department":
+                    remDep();
                     break;
 
                 case "View all Departments":
