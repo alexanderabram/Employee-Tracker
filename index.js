@@ -41,11 +41,11 @@ function run() {
                     viewEm();
                     break;
 
-                case "View ALL Employees by Department":
-                    viewEmByD();
+                case "View ALL Departments":
+                    viewDep();
                     break;
 
-                case "View ALL Employees by Manager":
+                case "View ALL Employees By Manager":
                     viewEmByMa();
                     break;
 
@@ -98,16 +98,29 @@ function viewEm() {
 }
 
 
-function viewEmByD(){
+function viewDep(){
     connection.query ("SELECT * FROM department", function(err,res) {
         console.table(res);
         run();
     })
 }
 
-function viewEmByMa()
+// function viewEmByMa() {
+//     connection.query ("SELECT * FROM manager")
+// }
 
-function addEm()
+function addEm() {
+    console.log("Generating new employee.\n");
+    inquirer
+    .prompt ([
+        {
+            name: "first_name",
+            type: "input",
+            message: "Provide employee's first name"
+        },
+    ])
+}
+
 
 function remEm()
 
