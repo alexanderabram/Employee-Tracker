@@ -110,6 +110,14 @@ function viewDep() {
     })
 }
 
+function viewRole() {
+    connection.query("SELECT * FROM role", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        run();
+    })
+}
+
 // function viewEmByMa() {
 //     connection.query ("SELECT * FROM manager")
 // }
@@ -147,7 +155,6 @@ function addEm() {
                 function (err, res) {
                     if (err) throw err;
                     console.log("Employee added!");
-
                     run();
                 }
             );
