@@ -185,7 +185,7 @@ function remEm() {
                         function (err, res) {
                             if (err) throw err;
                             console.log("Employee deleted!\n");
-                            start();
+                            run();
                         });
                 });
         }
@@ -219,58 +219,57 @@ function addDep() {
         })
 }
 
-function remDep()
+// function remDep()
 
 function addRole() {
-    function addRole() {
-        let departments = [];
-        connection.query("SELECT * FROM departments",
-            function (err, res) {
-                if (err) throw err;
-                for (let i = 0; i < res.length; i++) {
-                    res[i].first_name + " " + res[i].last_name
-                    departments.push({ name: res[i].name, value: res[i].id });
-                }
-                inquirer
-                    .prompt([
+    let departments = [];
+    connection.query("SELECT * FROM department",
+        function (err, res) {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                res[i].first_name + " " + res[i].last_name
+                departments.push({ name: res[i].name, value: res[i].id });
+            }
+            inquirer
+                .prompt([
+                    {
+                        name: "title",
+                        type: "input",
+                        message: "What role would you like to add?"
+                    },
+                    {
+                        name: "salary",
+                        type: "input",
+                        message: "What is the salary for the role?"
+                    },
+                    {
+                        name: "department",
+                        type: "list",
+                        message: "what department?",
+                        choices: departments
+                    }
+                ])
+                .then(function (res) {
+                    console.log(res);
+                    const query = connection.query(
+                        "INSERT INTO role SET ?",
                         {
-                            type: "input",
-                            name: "title",
-                            message: "What role would you like to add?"
+                            title: res.title,
+                            salary: res.salary,
+                            department_id: res.department
                         },
-                        {
-                            type: "input",
-                            name: "salary",
-                            message: "What is the salary for the role?"
-                        },
-                        {
-                            type: "list",
-                            name: "department",
-                            message: "what department?",
-                            choices: departments
+                        function (err, res) {
+                            if (err) throw err;
+                            console.log(res + "Added successfully!");
+                            run();
                         }
-                    ])
-                    .then(function (res) {
-                        console.log(res);
-                        const query = connection.query(
-                            "INSERT INTO roles SET ?",
-                            {
-                                title: res.title,
-                                salary: res.salary,
-                                department_id: res.department
-                            },
-                            function (err, res) {
-                                if (err) throw err;
-                                //const id = res.insertId;
-                                start();
-                            }
-                        )
-                    })
-            })
-    }
+                    )
+                })
+        })
+}
 
-    function remRole()
+function remRole()
 
-    function updateEmRole()
+function updateEmRole()
 
-    function updateEmMa()
+function updateEmMa()
