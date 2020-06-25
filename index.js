@@ -255,7 +255,7 @@ function addRole() {
                     {
                         type: "input",
                         name: "title",
-                        message: "What role would you like to add?"
+                        message: "What role would you like to add? (Be sure the proper department exists)"
                     },
                     {
                         type: "input",
@@ -331,9 +331,14 @@ function viewRole() {
 function updateEmpRole() {
     connection.query("SELECT first_name, last_name, id FROM employee",
         function (err, res) {
-            let employees = res.map(employee => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }))
-            let roles = res.map(role => ({ name: role.id, value: role.title }))
+            let employees = res.map(employee => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }));
+    
+    connection.query("SELECT id, title FROM role", 
+        function (err,res) {
+            let roles = res.map(role => ({ name: role.title, value: role.id}));
+        })
 
+    connection.query
             inquirer
                 .prompt([
                     {
@@ -345,7 +350,7 @@ function updateEmpRole() {
                     {
                         type: "list",
                         name: "role",
-                        message: "What is your new role?",
+                        message: "What is employee's new role?",
                         choices: roles
                     }
                 ])
@@ -353,7 +358,6 @@ function updateEmpRole() {
                     connection.query(`UPDATE employee SET role_id = ${res.role} WHERE id = ${res.employeeName}`,
                         function (err, res) {
                             console.log(res);
-                            //updateRole(res);
                             start()
                         }
                     );
